@@ -36,8 +36,7 @@ Pretty much just start up a long-lived task with the provided
 
 .. code-block:: python
 
-    t = loop.create_task(aiohealthcheck.tcp_health_endpoint(port=5000))
-
+    loop.create_task(aiohealthcheck.tcp_health_endpoint(port=5000))
 
 The internal TCP server will be shut down when the task is cancelled, e.g.,
 during your app's shutdown sequence.
