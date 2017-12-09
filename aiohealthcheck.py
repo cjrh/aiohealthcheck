@@ -41,7 +41,8 @@ async def tcp_health_endpoint(
         except:  # pragma: no cover
             logger.exception('Error in health-check:')
 
-    logger.info(f'Starting up the health-check listener on port {port}')
+    logger.info('Starting up the health-check listener on '
+                'port %s', port)
     server = await asyncio.start_server(connection, host='0.0.0.0', port=port)
 
     try:
