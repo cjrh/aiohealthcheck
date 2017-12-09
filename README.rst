@@ -23,5 +23,21 @@
 aiohealthcheck
 ======================
 
-TBD
+This tiny module provides a simple TCP endpoint, suitable for a healthcheck
+in your microservice application. All it provides is a simple TCP endpoint
+on a port to allow a container orchestration service to connect to, to
+verify that the application is up.
 
+Demo
+----
+
+Pretty much just start up a long-lived task with the provided
+``tcp_health_endpoint()`` coroutine function:
+
+.. code-block:: python
+
+    t = loop.create_task(aiohealthcheck.tcp_health_endpoint(port=5000))
+
+
+The internal TCP server will be shut down when the task is cancelled, e.g.,
+during your app's shutdown sequence.
