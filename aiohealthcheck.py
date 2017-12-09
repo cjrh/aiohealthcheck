@@ -38,7 +38,7 @@ async def tcp_health_endpoint(
             writer.write(payload().encode())
             await writer.drain()
             writer.close()
-        except:
+        except:  # pragma: no cover
             logger.exception('Error in health-check:')
 
     logger.info(f'Starting up the health-check listener on port {port}')
