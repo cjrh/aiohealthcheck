@@ -20,10 +20,36 @@
 __version__ = '2017.12.1'
 
 
-import asyncio
 import logging
-from types import SimpleNamespace
-from copy import deepcopy
+import asyncio
+from asyncio import StreamReader, StreamWriter
+from typing import Callable
 
 
+logger = logging.getLogger(__name__)
+
+
+async def tcp_health_endpoint(
+        port: int = 5000,
+        payload: Callable[[], str] = lambda: 'ping'):
+
+    async def connection(reader: StreamReader, writer: StreamWriter):
+        try:
+            writer.write(payload().encode())
+            await writer.drain()
+            writer.close()
+        except:
+            logger.exception('Error in health-check:')
+
+    logger.info(f'Starting up the health-check listener on port {port}')
+    server = await asyncio.start_server(connection, host='0.0.0.0', port=port)
+
+    try:
+        # Wait around till this coroutine is cancelled.
+        while True:
+            await asyncio.sleep(1)
+    except asyncio.CancelledError:
+        logger.warning('Shutting down the health check listener.')
+        server.close()
+        await server.wait_closed()
 
