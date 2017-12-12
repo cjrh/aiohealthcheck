@@ -42,7 +42,7 @@ The internal TCP server will be shut down when the task is cancelled, e.g.,
 during your app's shutdown sequence.
 
 Kubernetes Example Configuration
----
+----
 
 .. code-block::
 
