@@ -44,13 +44,14 @@ during your app's shutdown sequence.
 Kubernetes Example Configuration
 ---
 
-``
-ports:
-- name: liveness-port
-  containerPort: 5000
-livenessProbe:
-  tcpSocket:
-    port: liveness-port
-  initialDelaySeconds: 15
-  periodSeconds: 20
-``
+.. code-block::
+
+	ports:
+	- name: liveness-port
+	  containerPort: 5000
+	livenessProbe:
+	  tcpSocket:
+	    port: liveness-port
+	  initialDelaySeconds: 15
+	  periodSeconds: 20
+
