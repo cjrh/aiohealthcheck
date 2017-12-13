@@ -40,3 +40,18 @@ Pretty much just start up a long-lived task with the provided
 
 The internal TCP server will be shut down when the task is cancelled, e.g.,
 during your app's shutdown sequence.
+
+Kubernetes Example Configuration
+--------------------------------
+
+.. code-block::
+
+	ports:
+	- name: liveness-port
+	  containerPort: 5000
+	livenessProbe:
+	  tcpSocket:
+	    port: liveness-port
+	  initialDelaySeconds: 15
+	  periodSeconds: 20
+
