@@ -17,7 +17,7 @@
 """
 
 
-__version__ = '2017.12.2'
+__version__ = '2018.3.1'
 
 
 import logging
@@ -31,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 async def tcp_health_endpoint(
         port: int = 5000,
+        host: str = '0.0.0.0',
         payload: Callable[[], str] = lambda: 'ping'):
 
     async def connection(reader: StreamReader, writer: StreamWriter):
@@ -41,9 +42,8 @@ async def tcp_health_endpoint(
         except:  # pragma: no cover
             logger.exception('Error in health-check:')
 
-    logger.info('Starting up the health-check listener on '
-                'port %s', port)
-    server = await asyncio.start_server(connection, host='0.0.0.0', port=port)
+    logger.info('Starting up the health-check listener on %s:%s', host, port)
+    server = await asyncio.start_server(connection, host=host, port=port)
 
     try:
         # Wait around till this coroutine is cancelled.
