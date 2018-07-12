@@ -17,7 +17,7 @@
 """
 
 
-__version__ = '2018.3.1'
+__version__ = '2018.7.1'
 
 
 import logging
