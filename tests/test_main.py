@@ -1,4 +1,6 @@
 import asyncio
+from contextlib import suppress
+
 import aiohealthcheck
 
 
@@ -29,4 +31,5 @@ def test_health(loop: asyncio.AbstractEventLoop):
         assert results == [b'ping'] * 100
         group = asyncio.gather(t1, t2, return_exceptions=True)
         group.cancel()
-        loop.run_until_complete(group)
+        with suppress(asyncio.CancelledError):
+            loop.run_until_complete(group)
